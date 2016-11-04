@@ -257,14 +257,17 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// Draw the winner name
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			if (playerOneScore > playerTwoScore) {
-				g.drawString("Player 1 Wins!", 165, 200);
+				g.drawString("Player 1 Wins!", 130, 250);
 			} else {
-				g.drawString("Player 2 Wins!", 165, 200);
+				g.drawString("Player 2 Wins!", 130, 250);
 			}
 
 			// Draw Restart message
-			g.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
+			g.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
 			// TODO Draw a restart message
+			g.drawString("Game over", 150, 150);
+			g.setFont(new Font(Font.DIALOG, Font.BOLD, 35));
+			g.drawString("Press Space to restart", 10, 430);
 		}
 	}
 
