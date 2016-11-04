@@ -102,8 +102,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// move player 1
 			// Move up if after moving, paddle is not outside the screen
-			if (wPressed && playerOneY - paddleSpeed > 0) {
-				playerOneY -= paddleSpeed;
+			if (wPressed && playerOneY - paddleSpeed > 0) {					//FIXED #11:
+				playerOneY -= paddleSpeed;									//Wrong side control			
 			}
 			// Move down if after moving paddle is not outside the screen
 			if (sPressed && playerOneY + playerOneHeight + paddleSpeed < getHeight()) {
@@ -314,7 +314,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		} else if (e.getKeyCode() == KeyEvent.VK_W) {
 			wPressed = false;
 		} else if (e.getKeyCode() == KeyEvent.VK_S) {
-			wPressed = false;
+			sPressed = false; 									//FIXED #7:
+																//Control buttons of player 2 (button W/S) don't work correctly
 		}
 	}
 
