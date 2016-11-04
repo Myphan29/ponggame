@@ -50,8 +50,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private boolean sPressed;
 
 	/** The ball: position, diameter */
-	private int ballX = 200;
-	private int ballY = 200;
+	private int ballX = 240;
+	private int ballY = 240;
 	private int diameter = 20;
 	private int ballDeltaX = -1;
 	private int ballDeltaY = 3;
@@ -158,8 +158,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 						playing = false;
 						gameOver = true;
 					}
-					ballX = 200;
-					ballY = 200;
+					ballX = 240;
+					ballY = 240;
 				} else {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
@@ -179,8 +179,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 						playing = false;
 						gameOver = true;
 					}
-					ballX = 200;
-					ballY = 200;
+					ballX = 240;
+					ballY = 240;
 				} else {
 
 					// If the ball hitting the paddle, it will bounce back
@@ -265,8 +265,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// Draw Restart message
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
 			// TODO Draw a restart message
-			g.drawString("Game over", 150, 150);
-			g.setFont(new Font(Font.DIALOG, Font.BOLD, 35));
+			g.drawString("Game over", 150, 150);						//FIXED #8:
+			g.setFont(new Font(Font.DIALOG, Font.BOLD, 35));			//DON'T SHOW "GAME OVER"
 			g.drawString("Press Space to restart", 10, 430);
 		}
 	}
@@ -295,8 +295,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			showTitleScreen = true;
 			playerOneY = 250;
 			playerTwoY = 250;
-			ballX = 250;
-			ballY = 250;
+			ballX = 240;
+			ballY = 240;
 			playerOneScore = 0;									//FIXED #6: 
 			playerTwoScore = 0;									//SCORES DON'T RESET AFTER RESTARTTING
 		}
