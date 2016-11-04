@@ -294,9 +294,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			playerTwoY = 250;
 			ballX = 250;
 			ballY = 250;
+			playerOneScore = 0;									//FIXED #6: 
+			playerTwoScore = 0;									//SCORES DON'T RESET AFTER RESTARTTING
 		}
 	}
-
+	
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			upPressed = false;
