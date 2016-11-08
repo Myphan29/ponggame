@@ -258,6 +258,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// Draw scores
 			// TODO Set Blue color
+			g.setColor(Color.BLUE);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.drawString(String.valueOf(playerOneScore), 100, 100);		//FIXED #18:
 			g.drawString(String.valueOf(playerTwoScore), 350, 100);		//Font Location 
@@ -271,6 +272,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			}
 
 			// Draw Restart message
+			g.setColor(Color.PINK);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
 			// TODO Draw a restart message
 			g.drawString("Game over", 135, 150);						//FIXED #8:
