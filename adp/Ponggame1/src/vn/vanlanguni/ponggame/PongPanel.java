@@ -307,6 +307,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void keyReleased(KeyEvent e) {
+		if (playing){
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			upPressed = false;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -318,5 +319,5 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 																//Control buttons of player 2 (button W/S) don't work correctly
 		}
 	}
-
+	}
 }
