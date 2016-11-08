@@ -58,13 +58,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 	/** Player 1's paddle: position and size */
 	private int playerOneX = 0;
-	private int playerOneY = 250;
+	private int playerOneY = 200 ;
 	private int playerOneWidth = 10;
 	private int playerOneHeight = 60 ;
 
 	/** Player 2's paddle: position and size */
 	private int playerTwoX = 465;
-	private int playerTwoY = 250;
+	private int playerTwoY = 200;
 	private int playerTwoWidth = 10;
 	private int playerTwoHeight = 60;
 
@@ -297,8 +297,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		} else if (gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
 			gameOver = false;
 			showTitleScreen = true;
-			playerOneY = 250;
-			playerTwoY = 250;
+			playerOneY = 200;
+			playerTwoY = 200;
 			ballX = 240;
 			ballY = 240;
 			playerOneScore = 0;									//FIXED #6: 
