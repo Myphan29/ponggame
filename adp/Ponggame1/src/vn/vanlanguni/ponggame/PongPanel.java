@@ -228,18 +228,18 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// draw dashed line down center
 			for (int lineY = 0; lineY < getHeight(); lineY += 50) {
-                                                                              g.setColor(Color.GREEN);
+                g.setColor(Color.GREEN);
 				g.drawLine(250, lineY, 250, lineY + 25);
 			}
 
 			// draw "goal lines" on each side
-                                                          g.setColor(Color.GRAY);
+			g.setColor(Color.GRAY);
 			g.drawLine(playerOneRight, 0, playerOneRight, getHeight());
 			g.drawLine(playerTwoLeft, 0, playerTwoLeft, getHeight());
 
 			// draw the scores
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
-      g.setColor(Color.BLUE);
+			g.setColor(Color.BLUE);
 			g.drawString(String.valueOf(playerOneScore), 100, 100); // Player 1
 																	// score
 			g.drawString(String.valueOf(playerOneScore), 350, 100); // Player 2
@@ -259,21 +259,21 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// Draw scores
 			// TODO Set Blue color
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
-			g.drawString(String.valueOf(playerOneScore), 100, 100);
-			g.drawString(String.valueOf(playerTwoScore), 400, 100);
+			g.drawString(String.valueOf(playerOneScore), 100, 100);		//FIXED #18:
+			g.drawString(String.valueOf(playerTwoScore), 350, 100);		//Font Location 
 
 			// Draw the winner name
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			if (playerOneScore > playerTwoScore) {
-				g.drawString("Player 1 Wins!", 130, 250);
+				g.drawString("Player 1 Wins!", 120, 250);
 			} else {
-				g.drawString("Player 2 Wins!", 130, 250);
+				g.drawString("Player 2 Wins!", 120, 250);
 			}
 
 			// Draw Restart message
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
 			// TODO Draw a restart message
-			g.drawString("Game over", 150, 150);						//FIXED #8:
+			g.drawString("Game over", 135, 150);						//FIXED #8:
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 35));			//DON'T SHOW "GAME OVER"
 			g.drawString("Press Space to restart", 10, 430);
 		}
