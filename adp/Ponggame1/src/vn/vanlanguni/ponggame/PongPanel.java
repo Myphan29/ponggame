@@ -286,7 +286,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		if (showTitleScreen) {
-			if (e.getKeyChar() == 'P') {								//FIXED #19:
+			if (e.getKeyCode() == KeyEvent.VK_P) {								//FIXED #19:
 				showTitleScreen = false;								//P capslock does't work
 				playing = true;
 			}
