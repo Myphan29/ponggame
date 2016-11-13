@@ -24,6 +24,7 @@ public class MainGameUI extends JFrame{
 		setPreferredSize(new Dimension(_WIDTH, _HEIGHT));
 		setLayout(new BorderLayout());
 		setTitle("Pong Game - K21T Ltd.");
+		setResizable(false);
 		pongPanel = new PongPanel();
 		getContentPane().add(pongPanel, BorderLayout.CENTER);
 		pack();
