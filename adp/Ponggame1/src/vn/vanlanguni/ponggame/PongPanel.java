@@ -31,9 +31,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.border.EtchedBorder;
 
 
 
@@ -108,6 +111,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	int ballNum=1 ;
 	Color paddleColor;
 
+	// User name
+	JTextField txtUser1 = new JTextField("");
+	JTextField txtUser2 = new JTextField("");
 	
 	
 	//Set background
@@ -123,6 +129,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		h = 30;
 		x = WIDTH / 2 - w / 2;
 		y = HEIGHT / 2 - h / 2;
+		
+		
 		// listen to key presses
 		setFocusable(true);
 		addKeyListener(this);
@@ -352,16 +360,34 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.drawLine(playerTwoLeft, 0, playerTwoLeft, getHeight());
 			
 			//draw the name
-			g.setColor(Color.BLACK);
-			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
-			g.drawString(String.valueOf(username1), 30, 50);
-			g.drawString(String.valueOf(username2), 370, 50); 																
+//			g.setColor(Color.BLACK);
+//			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
+//			g.drawString(String.valueOf(username1), 30, 50);
+//			g.drawString(String.valueOf(username2), 370, 50); 		
+			add(txtUser1);
+			add(txtUser2);
+			Font font1 = new Font("", Font.ITALIC, 25);
+			txtUser1.setFont(font1);
+			Font font2 = new Font("", Font.ITALIC, 25);
+			txtUser2.setFont(font2);
+			txtUser1.setEditable(false);
+			txtUser2.setEditable(false);
+			//txtUser1.setBorder(BorderFactory.createEmptyBorder());
+			//txtUser2.setBorder(BorderFactory.createEmptyBorder());
+			txtUser1.setBounds(75, 10, 100, 30);
+			txtUser2.setBounds(325, 10, 100, 30);
+			txtUser1.setHorizontalAlignment(txtUser1.CENTER);
+			txtUser2.setHorizontalAlignment(txtUser2.CENTER);
+			txtUser1.setBackground(Color.ORANGE);
+			txtUser2.setBackground(Color.ORANGE);
+			
+			
 
 			// draw the scores
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.setColor(Color.BLUE);
-			g.drawString(String.valueOf(playerOneScore), 100, 100); // Player 1 score
-			g.drawString(String.valueOf(playerTwoScore), 350, 100); // Player 2 score
+			g.drawString(String.valueOf(playerOneScore), 100, 80); // Player 1 score
+			g.drawString(String.valueOf(playerTwoScore), 355, 80); // Player 2 score
 			
 			// draw the ball
 			ImageIcon imgBall = new ImageIcon();
@@ -491,6 +517,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				paddleColor=s.getPaddleColor();
 				System.out.println("ball number "+s.getBallNumber());
 				System.out.println("Paddle Color "+s.getPaddleColor() );
+				
+				txtUser1.setText(username1);
+				txtUser2.setText(username2);
+				
 
 			} else {
 				System.out.println("Player choose to cancel");
