@@ -3,24 +3,24 @@ package vn.vanlanguni.ponggame;
 import java.awt.Color;
 
 public class Settings {
-	private String userName1, userName2;
+	private String Player1, Player2;
 	private Color backgroundColor, paddleColor, ballColor;
 	private int ballNumber;
 
 	public Settings(){	}
 	
-	public Settings(String userName1, String userName2, Color backgroundColor, Color paddleColor, Color ballColor) {
+	public Settings(String Player1, String Player2, Color backgroundColor, Color paddleColor, Color ballColor) {
 		super();
-		this.userName1 = userName1;
-		this.userName2 = userName2;
+		this.Player1 = Player1;
+		this.Player2 = Player2;
 		this.backgroundColor = backgroundColor;
 		this.paddleColor = paddleColor;
 		this.ballColor = ballColor;
 	}
 
 	public Settings(String u1, String u2) {
-		userName1 = u1;
-		userName2 = u2;
+		Player1 = u1;
+		Player2 = u2;
 	}
 
 	public int getBallNumber() {
@@ -31,12 +31,12 @@ public class Settings {
 		this.ballNumber = ballNumber;
 	}
 
-	public String getUserName2() {
-		return userName2;
+	public String getPlayer2() {
+		return Player2;
 	}
 
-	public void setUserName2(String userName2) {
-		this.userName2 = userName2;
+	public void setPlayer2(String Player) {
+		this.Player2 = Player;
 	}
 
 	public Color getBackgroundColor() {
@@ -63,12 +63,12 @@ public class Settings {
 		this.ballColor = ballColor;
 	}
 
-	public String getUserName1() {
-		return userName1;
+	public String getPlayer1() {
+		return Player1;
 	}
 
-	public void setUserName1(String uname) {
-		userName1 = uname;
+	public void setPlayer1(String Player) {
+		Player1 = Player;
 	}
 
 }

@@ -94,10 +94,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	int x, y, w, h;
 	int dx, dy;
 	int ballNum = 0;
+	String username1;
+	String username2;
 	
 	//Set background
 	ImageIcon imgBgrStart = new ImageIcon("./Images/Bgr_Start.jpg"),
-			  imgBgrPlay = new ImageIcon("./Images/Bgr_Play.jpg"),
+			  imgBgrPlay = new ImageIcon("./Images/minion1.jpg"),
 			  imgBgrEnd = new ImageIcon("./Images/Bgr_End.jpg");
 	
 	/** Construct a PongPanel. */
@@ -236,6 +238,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		
 		if (showTitleScreen) {
 			g.drawImage(imgBgrStart.getImage(), 0, 0, 500, 500, null);
+			
+			
 			//Secondwindown
 			rect = new Rectangle(x, y, w, h);
 			if (hover) {
@@ -298,15 +302,19 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			//g.setColor(Color.GRAY);
 			g.drawLine(playerOneRight, 0, playerOneRight, getHeight());
 			g.drawLine(playerTwoLeft, 0, playerTwoLeft, getHeight());
+			
+			//draw the name
+			g.setColor(Color.BLACK);
+			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
+			g.drawString(String.valueOf(username1), 30, 50);
+			g.drawString(String.valueOf(username2), 370, 50); 																
 
 			// draw the scores
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.setColor(Color.BLUE);
-			g.drawString(String.valueOf(playerOneScore), 100, 100); // Player 1
-																	// score
-			g.drawString(String.valueOf(playerTwoScore), 350, 100); // Player 2
-																	// score
-
+			g.drawString(String.valueOf(playerOneScore), 100, 100); // Player 1 score
+			g.drawString(String.valueOf(playerTwoScore), 350, 100); // Player 2 score
+			
 			// draw the ball
 			g.setColor(Color.RED);
 			g.fillOval(ballX, ballY, diameter, diameter);
@@ -405,11 +413,14 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			// Stop and wait for user input
 
 			if (w.dialogResult == MyDialogResult.YES) {
-				System.out.printf("User settings: \n Username1: %s \n Username2: %s", s.getUserName1(),
-						s.getUserName2());
+				System.out.printf("Player settings: \n Player1: %s \n Player2: %s", s.getPlayer1(),
+						s.getPlayer2());
 				ballNum = s.getBallNumber();
+				username1=s.getPlayer1();
+				username2=s.getPlayer2();
+				
 			} else {
-				System.out.println("User chose to cancel");
+				System.out.println("Player choose to cancel");
 			}
 		}
 	}  

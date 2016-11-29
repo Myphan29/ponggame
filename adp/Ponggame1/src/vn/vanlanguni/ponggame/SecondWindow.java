@@ -13,10 +13,11 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class SecondWindow extends JDialog{
-	private JTextField txtUsername1;
-	private JTextField txtUsername2;
+	public JTextField txtPlayer1;
+	private JTextField txtPlayer2;
 	//Xem khai bao MyDialogResult o cuoi class nay
 	public MyDialogResult dialogResult;
+	public String sPlayer1, sPlayer2;
 	
 	public SecondWindow() {
 		setPreferredSize(new Dimension(300, 200));
@@ -25,30 +26,35 @@ public class SecondWindow extends JDialog{
 		setModal(true);
 		
 		dialogResult = MyDialogResult.DEFAULT;
-		txtUsername1 = new JTextField(10);
-		txtUsername2 = new JTextField(10);
-		getContentPane().add(txtUsername1);
-		getContentPane().add(txtUsername2);
-		txtUsername1.setBounds(90, 26, 100, 20);
-		txtUsername2.setBounds(90, 66, 100, 20);
+		txtPlayer1 = new JTextField(10);
+		txtPlayer2 = new JTextField(10);
+		getContentPane().add(txtPlayer1);
+		getContentPane().add(txtPlayer2);
+		txtPlayer1.setBounds(90, 26, 100, 20);
+		txtPlayer2.setBounds(90, 66, 100, 20);
 		
-		JLabel lblUser_1 = new JLabel("Username 1");
-		lblUser_1.setBounds(10, 29, 71, 14);
-		getContentPane().add(lblUser_1);
 		
-		JLabel lblUser_2 = new JLabel("Username 2");
-		lblUser_2.setBounds(10, 69, 71, 14);
-		getContentPane().add(lblUser_2);
+		JLabel lblPlayer_1 = new JLabel("Player 1");
+		lblPlayer_1.setBounds(10, 29, 71, 14);
+		getContentPane().add(lblPlayer_1);
+		
+		JLabel lblPlayer_2 = new JLabel("Player 2");
+		lblPlayer_2.setBounds(10, 69, 71, 14);
+		getContentPane().add(lblPlayer_2);
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dialogResult = MyDialogResult.YES;
 				setVisible(false);
+				//String sPlayer1, sPlayer2;
+//				sPlayer1 = txtPlayer1.getText();
+//				sPlayer2 = txtPlayer2.getText();
 			}
 		});
 		btnSave.setBounds(44, 114, 89, 23);
 		getContentPane().add(btnSave);
+		
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
@@ -76,8 +82,8 @@ public class SecondWindow extends JDialog{
 	
 	public Settings getSetings(){
 		Settings st = new Settings();
-		st.setUserName1(txtUsername1.getText());
-		st.setUserName2(txtUsername2.getText());
+		st.setPlayer1(txtPlayer1.getText());
+		st.setPlayer2(txtPlayer2.getText());
 		st.setBallNumber(1);
 		return st;
 	}
