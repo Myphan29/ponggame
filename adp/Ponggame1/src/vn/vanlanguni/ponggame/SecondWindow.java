@@ -49,11 +49,11 @@ public class SecondWindow extends JDialog{
 		txtUsername2.setBounds(90, 66, 100, 20);
 		
 		JLabel lblUser_1 = new JLabel("Username 1");
-		lblUser_1.setBounds(10, 29, 71, 14);
+		lblUser_1.setBounds(10, 29, 80, 14);
 		getContentPane().add(lblUser_1);
 		
 		JLabel lblUser_2 = new JLabel("Username 2");
-		lblUser_2.setBounds(10, 69, 71, 14);
+		lblUser_2.setBounds(10, 69, 80, 14);
 		getContentPane().add(lblUser_2);
 		
 		JButton btnSave = new JButton("Save");
@@ -101,9 +101,9 @@ public class SecondWindow extends JDialog{
 		btnGroupBall.add(optBall1);
 		btnGroupBall.add(optBall2);
 		btnGroupBall.add(optBall3);
-		optBall1.setBounds(10, 150, 60, 25);
-		optBall2.setBounds(80, 150, 60, 25);
-		optBall3.setBounds(150, 150, 60, 25);
+		optBall1.setBounds(10, 150, 70, 25);
+		optBall2.setBounds(80, 150, 70, 25);
+		optBall3.setBounds(150, 150, 70, 25);
 		
 		optBall1.addActionListener(new ActionListener() {
 			
@@ -134,7 +134,7 @@ public class SecondWindow extends JDialog{
 	}
 	public void ChoosePaddle(){
 		getContentPane().add(btnPad);
-		btnPad.setBounds(10, 250, 100, 25);
+		btnPad.setBounds(10, 250, 150, 25);
 		btnPad.addActionListener(new ActionListener() {
 			
 			@Override

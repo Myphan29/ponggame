@@ -80,7 +80,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private int playerOneHeight = 60 ;
 
 	/** Player 2's paddle: position and size */
-	private int playerTwoX = 483;
+	private int playerTwoX = 490;
 	private int playerTwoY = 200;
 	private int playerTwoWidth = 10;
 	private int playerTwoHeight = 60;
@@ -108,6 +108,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	int ballNum=1 ;
 	Color paddleColor;
 
+	
 	
 	//Set background
 	ImageIcon imgBgrStart = new ImageIcon("./Images/Bgr_Start.jpg"),
