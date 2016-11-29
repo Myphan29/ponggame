@@ -35,7 +35,7 @@ public class SecondWindow extends JDialog{
 			JButton btnPad= new JButton("Paddle Color");
 			
 	public SecondWindow() {
-		setPreferredSize(new Dimension(400, 400));
+		setPreferredSize(new Dimension(400, 380));
 		setTitle("Settings");
 		getContentPane().setLayout(null);
 		setModal(true);
@@ -63,7 +63,7 @@ public class SecondWindow extends JDialog{
 				setVisible(false);
 			}
 		});
-		btnSave.setBounds(44, 114, 89, 23);
+		btnSave.setBounds(80, 280, 80, 25);
 		getContentPane().add(btnSave);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -73,7 +73,7 @@ public class SecondWindow extends JDialog{
 				setVisible(false);
 			}
 		});
-		btnCancel.setBounds(154, 114, 89, 23);
+		btnCancel.setBounds(240, 280, 80, 25);
 		getContentPane().add(btnCancel);
 		
 		ChooseBall();
@@ -93,7 +93,18 @@ public class SecondWindow extends JDialog{
 			}
 		});
 	}
-
+	ImageIcon imgBall = new ImageIcon("./Images/ball.png"),
+			  imgBall2 = new ImageIcon("./Images/ball2.png"),
+			  imgBall3 = new ImageIcon("./Images/ball3.png");
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.drawImage(imgBall.getImage(), 55, 190, 80, 80, null);
+		g.drawImage(imgBall2.getImage(), 170, 190, 80, 80, null);
+		g.drawImage(imgBall3.getImage(), 285, 190, 80, 80, null);
+	}
+	
 	public void ChooseBall(){
 		getContentPane().add(optBall1);
 		getContentPane().add(optBall2);
@@ -101,9 +112,9 @@ public class SecondWindow extends JDialog{
 		btnGroupBall.add(optBall1);
 		btnGroupBall.add(optBall2);
 		btnGroupBall.add(optBall3);
-		optBall1.setBounds(10, 150, 70, 25);
-		optBall2.setBounds(80, 150, 70, 25);
-		optBall3.setBounds(150, 150, 70, 25);
+		optBall1.setBounds(55, 110, 60, 25);
+		optBall2.setBounds(170, 110, 60, 25);
+		optBall3.setBounds(285, 110, 60, 25);
 		
 		optBall1.addActionListener(new ActionListener() {
 			
@@ -134,7 +145,7 @@ public class SecondWindow extends JDialog{
 	}
 	public void ChoosePaddle(){
 		getContentPane().add(btnPad);
-		btnPad.setBounds(10, 250, 150, 25);
+		btnPad.setBounds(230, 43, 120, 25);
 		btnPad.addActionListener(new ActionListener() {
 			
 			@Override
