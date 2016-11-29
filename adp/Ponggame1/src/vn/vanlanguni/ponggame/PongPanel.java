@@ -464,7 +464,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 																//Control buttons of player 2 (button W/S) don't work correctly
 		}
 	}
-	}
+	} 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
