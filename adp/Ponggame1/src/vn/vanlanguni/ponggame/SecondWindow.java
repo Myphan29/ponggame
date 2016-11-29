@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,17 +23,16 @@ public class SecondWindow extends JDialog{
 	private JTextField txtUsername1;
 	private JTextField txtUsername2;
 	int NumberBall=1;
-	Color  userColorPaddle=Color.RED;
+	Settings st;
+	Color  userColorPaddle=Color.RED,userColorPaddlechoose;
 	//Xem khai bao MyDialogResult o cuoi class nay
 	public MyDialogResult dialogResult;
 	//Add radiobutton to choose ball
 			JRadioButton optBall1 = new JRadioButton("Ball 1"), optBall2= new JRadioButton("Ball 2"),
 					optBall3 = new JRadioButton("Ball 3");
 			ButtonGroup btnGroupBall= new ButtonGroup();
-			//Add RadioButton to choose Paddle\
-			JRadioButton optPad1 = new JRadioButton("RED"), optPad2= new JRadioButton("PINK"),
-					optPad3 = new JRadioButton("BLUE");
-			ButtonGroup btnGroupPad= new ButtonGroup();
+			//Add Button to choose Paddle Color
+			JButton btnPad= new JButton("Paddle Color");
 			
 	public SecondWindow() {
 		setPreferredSize(new Dimension(400, 400));
@@ -78,9 +78,7 @@ public class SecondWindow extends JDialog{
 		
 		ChooseBall();
 		ChoosePaddle();
-		//add(ballPicture);
-	//	ballPicture.setBounds(0,180,200,100);
-		
+	
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		pack();
 		
@@ -135,42 +133,18 @@ public class SecondWindow extends JDialog{
 		
 	}
 	public void ChoosePaddle(){
-		getContentPane().add(optPad1);
-		getContentPane().add(optPad2);
-		getContentPane().add(optPad3);
-		btnGroupPad.add(optPad1);
-		btnGroupPad.add(optPad2);
-		btnGroupPad.add(optPad3);
-		optPad1.setBounds(10, 250, 60, 25);
-		optPad2.setBounds(80, 250, 60, 25);
-		optPad3.setBounds(150, 250, 60, 25);
-		
-		optPad1.addActionListener(new ActionListener() {
+		getContentPane().add(btnPad);
+		btnPad.setBounds(10, 250, 100, 25);
+		btnPad.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				userColorPaddle=Color.red;
+				 Color userColorPaddlechoose =JColorChooser.showDialog(btnPad, "Choose paddle color",Color.RED);
+				 userColorPaddle=userColorPaddlechoose;
 			}
 		});
-		optPad2.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				userColorPaddle=Color.pink;
-			}
-		});
-		optPad3.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				userColorPaddle=Color.blue;
-			}
-		});
-		
-		
+	
 	}
 	public Settings getSetings(){
 		Settings st = new Settings();
