@@ -80,7 +80,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private int playerOneHeight = 60 ;
 
 	/** Player 2's paddle: position and size */
-	private int playerTwoX = 483;
+	private int playerTwoX = 489 ;
 	private int playerTwoY = 200;
 	private int playerTwoWidth = 10;
 	private int playerTwoHeight = 60;
@@ -203,7 +203,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					playerTwoScore++;
 
 					// Player 2 Win, restart the game
-					if (playerTwoScore == 300 ) {
+					if (playerTwoScore == 5  ) {
 						playing = false;
 						gameOver = true;
 					}
@@ -212,7 +212,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				} else {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
-					Sound.play("sound/hehe.wav");
+					//Sound.play("sound/hehe.wav");
 					ballDeltaX *= -1;
 					lastHitBall = 1;
 				}
@@ -226,7 +226,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					playerOneScore++;
 
 					// Player 1 Win, restart the game
-					if (playerOneScore == 300 ) {
+					if (playerOneScore == 5  ) {
 						playing = false;
 						gameOver = true;
 					}
@@ -236,7 +236,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
-					Sound.play("sound/hehe.wav");
+					//Sound.play("sound/hehe.wav");
 					ballDeltaX *= -1;
 					lastHitBall = 2 ;
 				}
@@ -247,7 +247,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			ballY += ballDeltaY;
 			
 			timeToDisplay -= interval ;
-			System.out.format("%d x: %d - y: %d\n", timeToDisplay, xRan, yRan);
+			//System.out.format("%d x: %d - y: %d\n", timeToDisplay, xRan, yRan);
 			if (timeToDisplay < 0) {
 				if (showRandom == false) {
 					showRandom = true;
@@ -259,17 +259,17 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					double distance = getPointDistance(ballCenter, ranCenter);
 					if(distance < diameter/2+15){
 						showRandom = false;
-						timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+						timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 2000;
 						if(lastHitBall == 1){
-							playerOneHeight /= 0.25 ;
+							playerOneHeight -= 20 ;
 						}else if(lastHitBall == 2){
-							playerTwoHeight /= 0.25 ;
+							playerTwoHeight -= 20 ;
 						}
 					}
 				}
 				if (timeToDisplay < -5000) {
 					showRandom = false;
-					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 2000;
 				}
 			}
 
