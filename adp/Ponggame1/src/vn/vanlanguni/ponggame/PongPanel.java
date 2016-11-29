@@ -83,7 +83,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private int playerOneHeight = 60 ;
 
 	/** Player 2's paddle: position and size */
-	private int playerTwoX = 490;
+	private int playerTwoX = 483;
 	private int playerTwoY = 200;
 	private int playerTwoWidth = 10;
 	private int playerTwoHeight = 60;
@@ -368,37 +368,36 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.drawImage(imgBgrStart.getImage(), 0, 0, 500, 500, null);
 
 			//Secondwindow
-			rect = new Rectangle(x, y, w, h);
+			rect = new Rectangle(x - 50, y + 182, w, h);
 			if (hover) {
 				if (pressed) {
-					g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 214, 371, 214 + 106, null);
+					//g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 214, 371, 214 + 106, null);
 					g.setColor(Color.RED);
 				} else {
-					g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 0, 371, 108, null);
+					//g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 0, 371, 108, null);
 					g.setColor(Color.WHITE);
 				}
 			} else {
-				g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 108, 371, 108 + 106, null);
+				//g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 108, 371, 108 + 106, null);
+				g.drawImage(btnIcon.getImage(), x - 50, y + 182, x - 50 + w, y + 182 + h, 0, 108, 371, 108 + 106, null);
 				g.setColor(Color.WHITE);
 			}
 			g.setFont(new Font("Tahoma", Font.BOLD, 15));
-			g.drawString("Setting", x + 24 , y + 19);
+			g.drawString("Setting", x - 25 , y + 202);
 
 			
 			/* Show welcome screen */
-
-			
 			
 			// Draw game title and start message
 			//g.fillRect(70, 45, 355, 75);
 			g.setColor(Color.CYAN);
 			g.setFont(new Font("", Font.BOLD, 60));
-			g.drawString("Pong Game", 80, 100);
+			g.drawString("Pong Game", 150, 380);
 			
 
 			// FIXME Welcome message below show smaller than game title
 			g.setFont(new Font(Font.DIALOG, Font.BOLD , 28));
-			g.drawString("Press 'P' to play.", 250, 400);
+			g.drawString("Press 'P' to play", 265, 440);
 			Sound.play("Sound/win.wav");
 			
 		} else if (playing) {
@@ -428,14 +427,14 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 //			g.drawString(String.valueOf(username2), 370, 50); 		
 			add(txtUser1);
 			add(txtUser2);
-			Font font1 = new Font("", Font.ITALIC, 25);
+			Font font1 = new Font(Font.DIALOG, Font.BOLD, 20);
 			txtUser1.setFont(font1);
-			Font font2 = new Font("", Font.ITALIC, 25);
+			Font font2 = new Font(Font.DIALOG, Font.BOLD, 20);
 			txtUser2.setFont(font2);
 			txtUser1.setEditable(false);
 			txtUser2.setEditable(false);
-			//txtUser1.setBorder(BorderFactory.createEmptyBorder());
-			//txtUser2.setBorder(BorderFactory.createEmptyBorder());
+			txtUser1.setBorder(BorderFactory.createEmptyBorder());
+			txtUser2.setBorder(BorderFactory.createEmptyBorder());
 			txtUser1.setBounds(75, 10, 100, 30);
 			txtUser2.setBounds(325, 10, 100, 30);
 			txtUser1.setHorizontalAlignment(txtUser1.CENTER);
@@ -448,8 +447,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			// draw the scores
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.setColor(Color.BLUE);
-			g.drawString(String.valueOf(playerOneScore), 100, 80); // Player 1 score
-			g.drawString(String.valueOf(playerTwoScore), 355, 80); // Player 2 score
+			g.drawString(String.valueOf(playerOneScore), 115, 80); // Player 1 score
+			g.drawString(String.valueOf(playerTwoScore), 365, 80); // Player 2 score
 			
 			// draw the ball
 			ImageIcon imgBall = new ImageIcon();
@@ -498,8 +497,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			// TODO Set Blue color
 			g.setColor(Color.RED);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
-			g.drawString(String.valueOf(playerOneScore), 110, 100);		//FIXED #18:
-			g.drawString(String.valueOf(playerTwoScore), 360, 100);		//Font Location 
+			g.drawString(String.valueOf(playerOneScore), 115, 80);		//FIXED #18:
+			g.drawString(String.valueOf(playerTwoScore), 365, 80);		//Font Location 
 
 			// Draw the winner name
 			g.setColor(Color.BLUE);
@@ -600,8 +599,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				System.out.println("ball number "+s.getBallNumber());
 				System.out.println("Paddle Color "+s.getPaddleColor() );
 				
-				txtUser1.setText(username1);
-				txtUser2.setText(username2);
+				txtUser1.setText(username1.toUpperCase());
+				txtUser2.setText(username2.toUpperCase());
 				
 
 			} else {
