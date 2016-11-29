@@ -60,10 +60,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private boolean sPressed;
 	
 	// Random +/-
-		private int timeToDisplay;
-		private boolean showRandom;
-		private int xRan;
-		private int yRan;
+		private int timeToDisplay,timeToDisplay2,timeToDisplay3;
+		private boolean showRandom,showRandomspeedplus,showRandomspeedminus;
+		private int xRan,xRanplus,xRanminus;
+		private int yRan,yRanplus,yRanminus;
 		private int lastHitBall;
 
 	/** The ball: position, diameter */
@@ -128,9 +128,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		
-		timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
-
+		timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+		timeToDisplay2 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+		timeToDisplay3 = ThreadLocalRandom.current().nextInt(5, 15 + 1) *500;
 		// call step() 60 fps
+		
 		Timer timer = new Timer(interval, this);
 		timer.start();
 		
@@ -247,6 +249,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			ballY += ballDeltaY;
 			
 			timeToDisplay -= interval ;
+			timeToDisplay2 -=interval;
+			timeToDisplay3 -=interval;
+			
+			
+			//Show bomb
+		
 			//System.out.format("%d x: %d - y: %d\n", timeToDisplay, xRan, yRan);
 			if (timeToDisplay < 0) {
 				if (showRandom == false) {
@@ -259,7 +267,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					double distance = getPointDistance(ballCenter, ranCenter);
 					if(distance < diameter/2+15){
 						showRandom = false;
-						timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 2000;
+						timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
 						if(lastHitBall == 1){
 							playerOneHeight -= 20 ;
 						}else if(lastHitBall == 2){
@@ -267,10 +275,64 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 						}
 					}
 				}
-				if (timeToDisplay < -5000) {
+				if (timeToDisplay < -2500) {
 					showRandom = false;
-					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 2000;
+					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
 				}
+				//showPlus
+				if(timeToDisplay2<0){
+					if (showRandomspeedplus == false) {
+						showRandomspeedplus = true;
+						
+						xRanplus=ThreadLocalRandom.current().nextInt(50, 450 + 1);
+						yRanplus=ThreadLocalRandom.current().nextInt(0, 470 + 1);
+					}else{
+						Point ballCenter2 = new Point(ballX+diameter/2, ballY+diameter/2);
+						Point ranPlus = new Point(xRanplus+15, yRanplus+15);
+						
+						
+						double distancePlus = getPointDistance(ballCenter2, ranPlus);
+						if(distancePlus<diameter/2+25){
+							showRandomspeedplus = false;
+							timeToDisplay2 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+							System.out.print("hit plus");
+							interval=1000/80 ;
+						}
+					}
+					if (timeToDisplay2 < -1500) {
+						showRandomspeedplus = false;
+						timeToDisplay2 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+					}
+					
+				}
+				//Show Minus
+				
+				if(timeToDisplay3 <0){
+					if (showRandomspeedminus== false) {
+						showRandomspeedminus = true;
+						
+						xRanminus=ThreadLocalRandom.current().nextInt(50, 450 + 1);
+						yRanminus=ThreadLocalRandom.current().nextInt(0, 470 + 1);
+					}else{
+						Point ballCenter3= new Point(ballX+diameter/2, ballY+diameter/2);
+						Point ranMinus = new Point(xRanminus+15, yRanminus+15);
+						
+						
+						double distanceMinus = getPointDistance(ballCenter3, ranMinus);
+						if(distanceMinus<diameter/2+15){
+							showRandomspeedminus = false;
+							timeToDisplay3 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+							System.out.print("hit minus ");
+							interval=5000/60;
+						}
+					}
+					if (timeToDisplay3 < -1000) {
+						showRandomspeedminus = false;
+						timeToDisplay3 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+					}
+					//System.out.println(timeToDisplay2);
+				}
+
 			}
 
 		}
@@ -381,7 +443,20 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				imgBomb = new ImageIcon("./Images/bomb.png");
 				g.drawImage(imgBomb.getImage(),xRan,yRan, 30,30 ,null);
 			}
+			
+			//Show random spech +
+			if (showRandomspeedplus) {
+				ImageIcon imgPlus  = new ImageIcon();
+				imgPlus = new ImageIcon("./Images/cong.png");
+				g.drawImage(imgPlus.getImage(),xRanplus,yRanplus, 50,50 ,null);
+			}
 
+		//show random spech-
+			if (showRandomspeedminus) {
+				ImageIcon imgMinus  = new ImageIcon();
+				imgMinus = new ImageIcon("./Images/tru.png");
+				g.drawImage(imgMinus.getImage(),xRanminus,yRanminus, 30,30 ,null);
+			}
 			// draw the paddles
 			g.setColor(paddleColor);
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
