@@ -20,6 +20,7 @@ package vn.vanlanguni.ponggame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -47,7 +49,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private boolean showTitleScreen = true;
 	private boolean playing;
 	private boolean gameOver;
-
+	private int interval = 1000 / 60;
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
 
@@ -56,6 +58,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private boolean downPressed;
 	private boolean wPressed;
 	private boolean sPressed;
+	
+	// Random +/-
+		private int timeToDisplay;
+		private boolean showRandom;
+		private int xRan;
+		private int yRan;
+		private int lastHitBall;
 
 	/** The ball: position, diameter */
 	private int ballX = 240;
@@ -83,19 +92,22 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private int playerOneScore;
 	private int playerTwoScore;
 	
-	//Secondwindown 
+	//Secondwindow
 	Color buttonColor = Color.BLUE;
 	Rectangle rect;
-	Rectangle rect2;
+	
 	ImageIcon btnIcon = new ImageIcon("images/button.png");
 	boolean hover;
 	boolean pressed;
 	boolean dragged;
 	int x, y, w, h;
 	int dx, dy;
-	int ballNum = 0;
+
 	String username1;
 	String username2;
+	int ballNum=1 ;
+	Color paddleColor;
+
 	
 	//Set background
 	ImageIcon imgBgrStart = new ImageIcon("./Images/Bgr_Start.jpg"),
@@ -115,10 +127,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		addKeyListener(this);
 		addMouseMotionListener(this);
 		addMouseListener(this);
-		setFocusable(true);
+		
+		timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+
 		// call step() 60 fps
-		Timer timer = new Timer(1000 / 60, this);
+		Timer timer = new Timer(interval, this);
 		timer.start();
+		
 	}
 
 	/** Implement actionPerformed */
@@ -176,6 +191,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 
 			// ball bounces off top and bottom of screen
 			if (nextBallTop < 0 || nextBallBottom > getHeight()) {
+				Sound.play("sound/bounce.wav");
 				ballDeltaY *= -1;
 			}
 
@@ -183,11 +199,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			if (nextBallLeft < playerOneRight) {
 				// is it going to miss the paddle?
 				if (nextBallTop > playerOneBottom || nextBallBottom < playerOneTop) {
-
+					Sound.play("sound/ht.wav");
 					playerTwoScore++;
 
 					// Player 2 Win, restart the game
-					if (playerTwoScore == 3) {
+					if (playerTwoScore == 300 ) {
 						playing = false;
 						gameOver = true;
 					}
@@ -196,7 +212,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				} else {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
+					Sound.play("sound/hehe.wav");
 					ballDeltaX *= -1;
+					lastHitBall = 1;
 				}
 			}
 
@@ -204,11 +222,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			if (nextBallRight > playerTwoLeft) {
 				// is it going to miss the paddle?
 				if (nextBallTop > playerTwoBottom || nextBallBottom < playerTwoTop) {
-
+					Sound.play("sound/ht.wav");
 					playerOneScore++;
 
 					// Player 1 Win, restart the game
-					if (playerOneScore == 3) {
+					if (playerOneScore == 300 ) {
 						playing = false;
 						gameOver = true;
 					}
@@ -218,18 +236,56 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
+					Sound.play("sound/hehe.wav");
 					ballDeltaX *= -1;
+					lastHitBall = 2 ;
 				}
 			}
 
 			// move the ball
 			ballX += ballDeltaX;
 			ballY += ballDeltaY;
+			
+			timeToDisplay -= interval ;
+			System.out.format("%d x: %d - y: %d\n", timeToDisplay, xRan, yRan);
+			if (timeToDisplay < 0) {
+				if (showRandom == false) {
+					showRandom = true;
+					xRan = ThreadLocalRandom.current().nextInt(50, 450 + 1);
+					yRan = ThreadLocalRandom.current().nextInt(0, 470 + 1);
+				}else{
+					Point ballCenter = new Point(ballX+diameter/2, ballY+diameter/2);
+					Point ranCenter = new Point(xRan+15, yRan+15);
+					double distance = getPointDistance(ballCenter, ranCenter);
+					if(distance < diameter/2+15){
+						showRandom = false;
+						timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+						if(lastHitBall == 1){
+							playerOneHeight /= 0.25 ;
+						}else if(lastHitBall == 2){
+							playerTwoHeight /= 0.25 ;
+						}
+					}
+				}
+				if (timeToDisplay < -5000) {
+					showRandom = false;
+					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+				}
+			}
+
 		}
 
 		// stuff has moved, tell this JPanel to repaint itself
 		repaint();
 	}
+
+	public double getPointDistance(Point p1, Point p2) {
+		return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+	}
+		
+
+	
+	
 
 	/** Paint the game screen. */
 	public void paintComponent(Graphics g) {
@@ -238,9 +294,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		
 		if (showTitleScreen) {
 			g.drawImage(imgBgrStart.getImage(), 0, 0, 500, 500, null);
-			
-			
-			//Secondwindown
+
+			//Secondwindow
 			rect = new Rectangle(x, y, w, h);
 			if (hover) {
 				if (pressed) {
@@ -255,17 +310,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				g.setColor(Color.WHITE);
 			}
 			g.setFont(new Font("Tahoma", Font.BOLD, 15));
-			g.drawString("Open", x + 30, y + 19);
+			g.drawString("Setting", x + 24 , y + 19);
 
-			ImageIcon imgBall = new ImageIcon();
-			if (ballNum == 1) {
-				imgBall = new ImageIcon("pic/ball1.png");
-
-			} else if (ballNum == 2) {
-				imgBall = new ImageIcon("pic/ball2.png");
-			}
-			g.drawImage(imgBall.getImage(), 10, 10, null);
-		
+			
 			/* Show welcome screen */
 
 			
@@ -277,8 +324,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.drawString("Pong Game", 80, 100);
 			
 
-			// FIXME Wellcome message below show smaller than game title
-			g.setFont(new Font(Font.DIALOG, Font.ITALIC, 28));
+			// FIXME Welcome message below show smaller than game title
+			g.setFont(new Font(Font.DIALOG, Font.BOLD , 28));
 			g.drawString("Press 'P' to play.", 250, 400);
 			
 			
@@ -316,14 +363,31 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.drawString(String.valueOf(playerTwoScore), 350, 100); // Player 2 score
 			
 			// draw the ball
-			g.setColor(Color.RED);
-			g.fillOval(ballX, ballY, diameter, diameter);
+			ImageIcon imgBall = new ImageIcon();
+				if (ballNum == 1) {
+			imgBall = new ImageIcon("./Images/ball.png");
+
+				} else if (ballNum == 2) {
+			imgBall = new ImageIcon("./Images/ball2.png");
+			}
+				else if (ballNum == 3) {
+					imgBall = new ImageIcon("./Images/ball3.png");
+					}
+			g.drawImage(imgBall.getImage(),ballX,ballY, 30,30 ,null);
+		
+			
+			//Show random +/-
+			if (showRandom) {
+				ImageIcon imgBomb  = new ImageIcon();
+				imgBomb = new ImageIcon("./Images/bomb.png");
+				g.drawImage(imgBomb.getImage(),xRan,yRan, 30,30 ,null);
+			}
 
 			// draw the paddles
+			g.setColor(paddleColor);
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
 			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
 		} else if (gameOver) {
-
 			/* Show End game screen with winner name and score */
 			
 			g.drawImage(imgBgrEnd.getImage(), 0, 0, 500, 500, null);
@@ -413,12 +477,20 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			// Stop and wait for user input
 
 			if (w.dialogResult == MyDialogResult.YES) {
-				System.out.printf("Player settings: \n Player1: %s \n Player2: %s", s.getPlayer1(),
-						s.getPlayer2());
+
+				System.out.printf("User settings: \n Username1: %s \n Username2: %s \n", s.getUserName1(),
+						s.getUserName2());
+
 				ballNum = s.getBallNumber();
-				username1=s.getPlayer1();
-				username2=s.getPlayer2();
+
+				username1=s.getUserName1();
+				username2=s.getUserName2();
 				
+
+				paddleColor=s.getPaddleColor();
+				System.out.println("ball number "+s.getBallNumber());
+				System.out.println("Paddle Color "+s.getPaddleColor() );
+
 			} else {
 				System.out.println("Player choose to cancel");
 			}
