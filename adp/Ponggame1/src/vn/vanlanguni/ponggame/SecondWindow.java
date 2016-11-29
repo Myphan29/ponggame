@@ -1,13 +1,17 @@
 package vn.vanlanguni.ponggame;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,12 +23,17 @@ public class SecondWindow extends JDialog{
 	private JTextField txtUsername1;
 	private JTextField txtUsername2;
 	int NumberBall=1;
+	Settings st;
+	Color  userColorPaddle=Color.RED,userColorPaddlechoose;
 	//Xem khai bao MyDialogResult o cuoi class nay
 	public MyDialogResult dialogResult;
 	//Add radiobutton to choose ball
 			JRadioButton optBall1 = new JRadioButton("Ball 1"), optBall2= new JRadioButton("Ball 2"),
 					optBall3 = new JRadioButton("Ball 3");
 			ButtonGroup btnGroupBall= new ButtonGroup();
+			//Add Button to choose Paddle Color
+			JButton btnPad= new JButton("Paddle Color");
+			
 	public SecondWindow() {
 		setPreferredSize(new Dimension(400, 400));
 		setTitle("Settings");
@@ -68,8 +77,8 @@ public class SecondWindow extends JDialog{
 		getContentPane().add(btnCancel);
 		
 		ChooseBall();
-		
-		
+		ChoosePaddle();
+	
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		pack();
 		
@@ -84,7 +93,7 @@ public class SecondWindow extends JDialog{
 			}
 		});
 	}
-	
+
 	public void ChooseBall(){
 		getContentPane().add(optBall1);
 		getContentPane().add(optBall2);
@@ -95,6 +104,7 @@ public class SecondWindow extends JDialog{
 		optBall1.setBounds(10, 150, 60, 25);
 		optBall2.setBounds(80, 150, 60, 25);
 		optBall3.setBounds(150, 150, 60, 25);
+		
 		optBall1.addActionListener(new ActionListener() {
 			
 			@Override
@@ -122,11 +132,27 @@ public class SecondWindow extends JDialog{
 		
 		
 	}
+	public void ChoosePaddle(){
+		getContentPane().add(btnPad);
+		btnPad.setBounds(10, 250, 100, 25);
+		btnPad.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				 Color userColorPaddlechoose =JColorChooser.showDialog(btnPad, "Choose paddle color",Color.RED);
+				 userColorPaddle=userColorPaddlechoose;
+			}
+		});
+	
+	}
 	public Settings getSetings(){
 		Settings st = new Settings();
 		st.setUserName1(txtUsername1.getText());
 		st.setUserName2(txtUsername2.getText());
 		st.setBallNumber(NumberBall);
+		st.setPaddleColor(userColorPaddle);
+		
 		return st;
 	}
 }
