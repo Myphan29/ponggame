@@ -461,7 +461,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.setColor(paddleColor);
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
 			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
-		} else if (gameOver) {
+		} else if (gameOver) {  
 			/* Show End game screen with winner name and score */
 			
 			g.drawImage(imgBgrEnd.getImage(), 0, 0, 500, 500, null);
