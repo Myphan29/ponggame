@@ -86,14 +86,14 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	//Secondwindown 
 	Color buttonColor = Color.BLUE;
 	Rectangle rect;
-	Rectangle rect2;
+	
 	ImageIcon btnIcon = new ImageIcon("images/button.png");
 	boolean hover;
 	boolean pressed;
 	boolean dragged;
 	int x, y, w, h;
 	int dx, dy;
-	int ballNum = 0;
+	int ballNum=1 ;
 	
 	//Set background
 	ImageIcon imgBgrStart = new ImageIcon("./Images/Bgr_Start.jpg"),
@@ -251,17 +251,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				g.setColor(Color.WHITE);
 			}
 			g.setFont(new Font("Tahoma", Font.BOLD, 15));
-			g.drawString("Open", x + 30, y + 19);
+			g.drawString("Setting", x + 24 , y + 19);
 
-			ImageIcon imgBall = new ImageIcon();
-			if (ballNum == 1) {
-				imgBall = new ImageIcon("pic/ball1.png");
-
-			} else if (ballNum == 2) {
-				imgBall = new ImageIcon("pic/ball2.png");
-			}
-			g.drawImage(imgBall.getImage(), 10, 10, null);
-		
+			
 			/* Show welcome screen */
 
 			
@@ -274,7 +266,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			
 
 			// FIXME Wellcome message below show smaller than game title
-			g.setFont(new Font(Font.DIALOG, Font.ITALIC, 28));
+			g.setFont(new Font(Font.DIALOG, Font.BOLD , 28));
 			g.drawString("Press 'P' to play.", 250, 400);
 			
 			
@@ -308,8 +300,20 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 																	// score
 
 			// draw the ball
-			g.setColor(Color.RED);
-			g.fillOval(ballX, ballY, diameter, diameter);
+			ImageIcon imgBall = new ImageIcon();
+				if (ballNum == 1) {
+			imgBall = new ImageIcon("./Images/ball.png");
+
+				} else if (ballNum == 2) {
+			imgBall = new ImageIcon("./Images/ball2.png");
+			}
+				else if (ballNum == 3) {
+					imgBall = new ImageIcon("./Images/ball3.png");
+					}
+			g.drawImage(imgBall.getImage(),ballX,ballY, 30,30 ,null);
+		
+			//g.setColor(Color.RED);
+			//g.fillOval(ballX, ballY, diameter, diameter);
 
 			// draw the paddles
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
@@ -405,9 +409,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			// Stop and wait for user input
 
 			if (w.dialogResult == MyDialogResult.YES) {
-				System.out.printf("User settings: \n Username1: %s \n Username2: %s", s.getUserName1(),
+				System.out.printf("User settings: \n Username1: %s \n Username2: %s \n", s.getUserName1(),
 						s.getUserName2());
 				ballNum = s.getBallNumber();
+				System.out.println("ball number "+s.getBallNumber());
 			} else {
 				System.out.println("User chose to cancel");
 			}

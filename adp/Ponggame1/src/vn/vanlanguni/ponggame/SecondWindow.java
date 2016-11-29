@@ -1,26 +1,33 @@
 package vn.vanlanguni.ponggame;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
+
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class SecondWindow extends JDialog{
 	private JTextField txtUsername1;
 	private JTextField txtUsername2;
+	int NumberBall=1;
 	//Xem khai bao MyDialogResult o cuoi class nay
 	public MyDialogResult dialogResult;
-	
+	//Add radiobutton to choose ball
+			JRadioButton optBall1 = new JRadioButton("Ball 1"), optBall2= new JRadioButton("Ball 2"),
+					optBall3 = new JRadioButton("Ball 3");
+			ButtonGroup btnGroupBall= new ButtonGroup();
 	public SecondWindow() {
-		setPreferredSize(new Dimension(300, 200));
-		setTitle("Second Window");
+		setPreferredSize(new Dimension(400, 400));
+		setTitle("Settings");
 		getContentPane().setLayout(null);
 		setModal(true);
 		
@@ -59,6 +66,10 @@ public class SecondWindow extends JDialog{
 		});
 		btnCancel.setBounds(154, 114, 89, 23);
 		getContentPane().add(btnCancel);
+		
+		ChooseBall();
+		
+		
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		pack();
 		
@@ -74,11 +85,48 @@ public class SecondWindow extends JDialog{
 		});
 	}
 	
+	public void ChooseBall(){
+		getContentPane().add(optBall1);
+		getContentPane().add(optBall2);
+		getContentPane().add(optBall3);
+		btnGroupBall.add(optBall1);
+		btnGroupBall.add(optBall2);
+		btnGroupBall.add(optBall3);
+		optBall1.setBounds(10, 150, 60, 25);
+		optBall2.setBounds(80, 150, 60, 25);
+		optBall3.setBounds(150, 150, 60, 25);
+		optBall1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				NumberBall=1;
+			}
+		});
+		optBall2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				NumberBall=2;
+			}
+		});
+		optBall3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				NumberBall=3;
+			}
+		});
+		
+		
+	}
 	public Settings getSetings(){
 		Settings st = new Settings();
 		st.setUserName1(txtUsername1.getText());
 		st.setUserName2(txtUsername2.getText());
-		st.setBallNumber(1);
+		st.setBallNumber(NumberBall);
 		return st;
 	}
 }
