@@ -83,7 +83,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private int playerOneScore;
 	private int playerTwoScore;
 	
-	//Secondwindown 
+	//Secondwindow
 	Color buttonColor = Color.BLUE;
 	Rectangle rect;
 	
@@ -239,7 +239,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		
 		if (showTitleScreen) {
 			g.drawImage(imgBgrStart.getImage(), 0, 0, 500, 500, null);
-			//Secondwindown
+			//Second window
 			rect = new Rectangle(x, y, w, h);
 			if (hover) {
 				if (pressed) {
@@ -268,7 +268,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.drawString("Pong Game", 80, 100);
 			
 
-			// FIXME Wellcome message below show smaller than game title
+			// FIXME Welcome message below show smaller than game title
 			g.setFont(new Font(Font.DIALOG, Font.BOLD , 28));
 			g.drawString("Press 'P' to play.", 250, 400);
 			
@@ -314,7 +314,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					imgBall = new ImageIcon("./Images/ball3.png");
 					}
 			g.drawImage(imgBall.getImage(),ballX,ballY, 30,30 ,null);
-		
+	
 			//g.setColor(Color.RED);
 			//g.fillOval(ballX, ballY, diameter, diameter);
 
@@ -322,7 +322,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
 			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
 		} else if (gameOver) {
-
 			/* Show End game screen with winner name and score */
 			
 			g.drawImage(imgBgrEnd.getImage(), 0, 0, 500, 500, null);
