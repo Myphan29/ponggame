@@ -1,12 +1,15 @@
 package vn.vanlanguni.ponggame;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,12 +22,18 @@ public class SecondWindow extends JDialog{
 	private JTextField txtUsername1;
 	private JTextField txtUsername2;
 	int NumberBall=1;
+	Color  userColorPaddle=Color.RED;
 	//Xem khai bao MyDialogResult o cuoi class nay
 	public MyDialogResult dialogResult;
 	//Add radiobutton to choose ball
 			JRadioButton optBall1 = new JRadioButton("Ball 1"), optBall2= new JRadioButton("Ball 2"),
 					optBall3 = new JRadioButton("Ball 3");
 			ButtonGroup btnGroupBall= new ButtonGroup();
+			//Add RadioButton to choose Paddle\
+			JRadioButton optPad1 = new JRadioButton("RED"), optPad2= new JRadioButton("PINK"),
+					optPad3 = new JRadioButton("BLUE");
+			ButtonGroup btnGroupPad= new ButtonGroup();
+			
 	public SecondWindow() {
 		setPreferredSize(new Dimension(400, 400));
 		setTitle("Settings");
@@ -68,7 +77,9 @@ public class SecondWindow extends JDialog{
 		getContentPane().add(btnCancel);
 		
 		ChooseBall();
-		
+		ChoosePaddle();
+		//add(ballPicture);
+	//	ballPicture.setBounds(0,180,200,100);
 		
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		pack();
@@ -84,7 +95,7 @@ public class SecondWindow extends JDialog{
 			}
 		});
 	}
-	
+
 	public void ChooseBall(){
 		getContentPane().add(optBall1);
 		getContentPane().add(optBall2);
@@ -95,6 +106,7 @@ public class SecondWindow extends JDialog{
 		optBall1.setBounds(10, 150, 60, 25);
 		optBall2.setBounds(80, 150, 60, 25);
 		optBall3.setBounds(150, 150, 60, 25);
+		
 		optBall1.addActionListener(new ActionListener() {
 			
 			@Override
@@ -122,11 +134,51 @@ public class SecondWindow extends JDialog{
 		
 		
 	}
+	public void ChoosePaddle(){
+		getContentPane().add(optPad1);
+		getContentPane().add(optPad2);
+		getContentPane().add(optPad3);
+		btnGroupPad.add(optPad1);
+		btnGroupPad.add(optPad2);
+		btnGroupPad.add(optPad3);
+		optPad1.setBounds(10, 250, 60, 25);
+		optPad2.setBounds(80, 250, 60, 25);
+		optPad3.setBounds(150, 250, 60, 25);
+		
+		optPad1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				userColorPaddle=Color.red;
+			}
+		});
+		optPad2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				userColorPaddle=Color.pink;
+			}
+		});
+		optPad3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				userColorPaddle=Color.blue;
+			}
+		});
+		
+		
+	}
 	public Settings getSetings(){
 		Settings st = new Settings();
 		st.setUserName1(txtUsername1.getText());
 		st.setUserName2(txtUsername2.getText());
 		st.setBallNumber(NumberBall);
+		st.setPaddleColor(userColorPaddle);
+		
 		return st;
 	}
 }
