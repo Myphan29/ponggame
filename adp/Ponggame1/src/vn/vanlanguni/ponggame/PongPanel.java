@@ -20,23 +20,30 @@ package vn.vanlanguni.ponggame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+
 
 /**  
  * 
  * @author Invisible Man
  *
  */
-public class PongPanel extends JPanel implements ActionListener, KeyListener {
+public class PongPanel extends JPanel implements ActionListener, KeyListener, MouseListener ,MouseMotionListener{
 	private static final long serialVersionUID = -1097341635155021546L;
-
+	private static final int WIDTH = 500;
+	private static final int HEIGHT = 500;
 	private boolean showTitleScreen = true;
 	private boolean playing;
 	private boolean gameOver;
@@ -75,7 +82,20 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Player score, show on upper left and right. */
 	private int playerOneScore;
 	private int playerTwoScore;
-
+	
+	//Secondwindown 
+	Color buttonColor = Color.BLUE;
+	Rectangle rect;
+	Rectangle rect2;
+	ImageIcon btnIcon = new ImageIcon("images/button.png");
+	boolean hover;
+	boolean pressed;
+	boolean dragged;
+	int x, y, w, h;
+	int dx, dy;
+	int ballNum = 0;
+	
+	//Set background
 	ImageIcon imgBgrStart = new ImageIcon("./Images/Bgr_Start.jpg"),
 			  imgBgrPlay = new ImageIcon("./Images/Bgr_Play.jpg"),
 			  imgBgrEnd = new ImageIcon("./Images/Bgr_End.jpg");
@@ -83,11 +103,17 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Construct a PongPanel. */
 	public PongPanel() {
 		setBackground(backgroundColor);
-
+		//Second windown 
+		w = 100;
+		h = 30;
+		x = WIDTH / 2 - w / 2;
+		y = HEIGHT / 2 - h / 2;
 		// listen to key presses
 		setFocusable(true);
 		addKeyListener(this);
-
+		addMouseMotionListener(this);
+		addMouseListener(this);
+		setFocusable(true);
 		// call step() 60 fps
 		Timer timer = new Timer(1000 / 60, this);
 		timer.start();
@@ -207,12 +233,38 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-
+		
 		if (showTitleScreen) {
+			g.drawImage(imgBgrStart.getImage(), 0, 0, 500, 500, null);
+			//Secondwindown
+			rect = new Rectangle(x, y, w, h);
+			if (hover) {
+				if (pressed) {
+					g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 214, 371, 214 + 106, null);
+					g.setColor(Color.RED);
+				} else {
+					g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 0, 371, 108, null);
+					g.setColor(Color.WHITE);
+				}
+			} else {
+				g.drawImage(btnIcon.getImage(), x, y, x + w, y + h, 0, 108, 371, 108 + 106, null);
+				g.setColor(Color.WHITE);
+			}
+			g.setFont(new Font("Tahoma", Font.BOLD, 15));
+			g.drawString("Open", x + 30, y + 19);
 
+			ImageIcon imgBall = new ImageIcon();
+			if (ballNum == 1) {
+				imgBall = new ImageIcon("pic/ball1.png");
+
+			} else if (ballNum == 2) {
+				imgBall = new ImageIcon("pic/ball2.png");
+			}
+			g.drawImage(imgBall.getImage(), 10, 10, null);
+		
 			/* Show welcome screen */
 
-			g.drawImage(imgBgrStart.getImage(), 0, 0, 500, 500, null);
+			
 			
 			// Draw game title and start message
 			g.fillRect(70, 45, 355, 75);
@@ -339,5 +391,70 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 																//Control buttons of player 2 (button W/S) don't work correctly
 		}
 	}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		if (rect.contains(e.getPoint())) {
+			SecondWindow w = new SecondWindow();
+			w.setLocationRelativeTo(PongPanel.this);
+			w.setVisible(true);
+			Settings s = w.getSetings();
+			System.out.println("After open window");
+			// Stop and wait for user input
+
+			if (w.dialogResult == MyDialogResult.YES) {
+				System.out.printf("User settings: \n Username1: %s \n Username2: %s", s.getUserName1(),
+						s.getUserName2());
+				ballNum = s.getBallNumber();
+			} else {
+				System.out.println("User chose to cancel");
+			}
+		}
+	}  
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		pressed = true;
+		if (rect.contains(e.getX(), e.getY())) {
+			dx = e.getX() - x;
+			dy = e.getY() - y;
+			dragged = true;
+		}
+		repaint();
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		pressed = false;
+		dragged = false;
+		repaint();
 	}
 }
