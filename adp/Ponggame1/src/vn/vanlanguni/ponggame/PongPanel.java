@@ -327,12 +327,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			// FIXME Welcome message below show smaller than game title
 			g.setFont(new Font(Font.DIALOG, Font.BOLD , 28));
 			g.drawString("Press 'P' to play.", 250, 400);
-			
+			Sound.play("Sound/win.wav");
 			
 		} else if (playing) {
 
 			/* Game is playing */
-			
 			g.drawImage(imgBgrPlay.getImage(), 0, 0, 500, 500, null);
 
 			// set the coordinate limit
@@ -412,7 +411,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			//g.setColor(Color.PINK);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
 			// TODO Draw a restart message
-			g.drawString("Game over", 145, 133);						//FIXED #8:
+			g.drawString("Game over", 145, 133);
+			Sound.play("Sound/win.wav");
+			//FIXED #8:
 			g.setColor(Color.RED);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 35));			//DON'T SHOW "GAME OVER"
 			g.drawString("Press Space to restart", 70, 460);
