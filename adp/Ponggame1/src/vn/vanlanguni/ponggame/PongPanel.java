@@ -63,10 +63,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private boolean sPressed;
 	
 	// Random +/-
-		private int timeToDisplay;
-		private boolean showRandom;
-		private int xRan;
-		private int yRan;
+		private int timeToDisplay,timeToDisplay2,timeToDisplay3;
+		private boolean showRandom,showRandomspeedplus,showRandomspeedminus;
+		private int xRan,xRanplus,xRanminus;
+		private int yRan,yRanplus,yRanminus;
 		private int lastHitBall;
 
 	/** The ball: position, diameter */
@@ -87,6 +87,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private int playerTwoY = 200;
 	private int playerTwoWidth = 10;
 	private int playerTwoHeight = 60;
+
 
 	/** Speed of the paddle - How fast the paddle move. */
 	private int paddleSpeed = 5;
@@ -137,9 +138,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		addMouseMotionListener(this);
 		addMouseListener(this);
 		
-		timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
-
+		timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+		timeToDisplay2 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+		timeToDisplay3 = ThreadLocalRandom.current().nextInt(5, 15 + 1) *500;
 		// call step() 60 fps
+		
 		Timer timer = new Timer(interval, this);
 		timer.start();
 		
@@ -212,7 +215,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					playerTwoScore++;
 
 					// Player 2 Win, restart the game
-					if (playerTwoScore == 300 ) {
+					if (playerTwoScore == 5  ) {
 						playing = false;
 						gameOver = true;
 					}
@@ -221,7 +224,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				} else {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
-					Sound.play("sound/hehe.wav");
+					//Sound.play("sound/hehe.wav");
 					ballDeltaX *= -1;
 					lastHitBall = 1;
 				}
@@ -235,7 +238,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					playerOneScore++;
 
 					// Player 1 Win, restart the game
-					if (playerOneScore == 300 ) {
+					if (playerOneScore == 5  ) {
 						playing = false;
 						gameOver = true;
 					}
@@ -245,7 +248,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
-					Sound.play("sound/hehe.wav");
+					//Sound.play("sound/hehe.wav");
 					ballDeltaX *= -1;
 					lastHitBall = 2 ;
 				}
@@ -256,7 +259,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			ballY += ballDeltaY;
 			
 			timeToDisplay -= interval ;
-			System.out.format("%d x: %d - y: %d\n", timeToDisplay, xRan, yRan);
+			timeToDisplay2 -=interval;
+			timeToDisplay3 -=interval;
+			
+			
+			//Show bomb
+		
+			//System.out.format("%d x: %d - y: %d\n", timeToDisplay, xRan, yRan);
 			if (timeToDisplay < 0) {
 				if (showRandom == false) {
 					showRandom = true;
@@ -270,16 +279,70 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 						showRandom = false;
 						timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
 						if(lastHitBall == 1){
-							playerOneHeight /= 0.25 ;
+							playerOneHeight -= 20 ;
 						}else if(lastHitBall == 2){
-							playerTwoHeight /= 0.25 ;
+							playerTwoHeight -= 20 ;
 						}
 					}
 				}
-				if (timeToDisplay < -5000) {
+				if (timeToDisplay < -2500) {
 					showRandom = false;
-					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
 				}
+				//showPlus
+				if(timeToDisplay2<0){
+					if (showRandomspeedplus == false) {
+						showRandomspeedplus = true;
+						
+						xRanplus=ThreadLocalRandom.current().nextInt(50, 450 + 1);
+						yRanplus=ThreadLocalRandom.current().nextInt(0, 470 + 1);
+					}else{
+						Point ballCenter2 = new Point(ballX+diameter/2, ballY+diameter/2);
+						Point ranPlus = new Point(xRanplus+15, yRanplus+15);
+						
+						
+						double distancePlus = getPointDistance(ballCenter2, ranPlus);
+						if(distancePlus<diameter/2+25){
+							showRandomspeedplus = false;
+							timeToDisplay2 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+							System.out.print("hit plus");
+							interval=1000/80 ;
+						}
+					}
+					if (timeToDisplay2 < -1500) {
+						showRandomspeedplus = false;
+						timeToDisplay2 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+					}
+					
+				}
+				//Show Minus
+				
+				if(timeToDisplay3 <0){
+					if (showRandomspeedminus== false) {
+						showRandomspeedminus = true;
+						
+						xRanminus=ThreadLocalRandom.current().nextInt(50, 450 + 1);
+						yRanminus=ThreadLocalRandom.current().nextInt(0, 470 + 1);
+					}else{
+						Point ballCenter3= new Point(ballX+diameter/2, ballY+diameter/2);
+						Point ranMinus = new Point(xRanminus+15, yRanminus+15);
+						
+						
+						double distanceMinus = getPointDistance(ballCenter3, ranMinus);
+						if(distanceMinus<diameter/2+15){
+							showRandomspeedminus = false;
+							timeToDisplay3 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+							System.out.print("hit minus ");
+							interval=5000/60;
+						}
+					}
+					if (timeToDisplay3 < -1000) {
+						showRandomspeedminus = false;
+						timeToDisplay3 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
+					}
+					//System.out.println(timeToDisplay2);
+				}
+
 			}
 
 		}
@@ -327,21 +390,20 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			
 			
 			// Draw game title and start message
-			g.fillRect(70, 45, 355, 75);
-			g.setColor(Color.LIGHT_GRAY);
-			g.setFont(new Font(Font.DIALOG, Font.BOLD, 60));
+			//g.fillRect(70, 45, 355, 75);
+			g.setColor(Color.CYAN);
+			g.setFont(new Font("", Font.BOLD, 60));
 			g.drawString("Pong Game", 80, 100);
 			
 
 			// FIXME Welcome message below show smaller than game title
 			g.setFont(new Font(Font.DIALOG, Font.BOLD , 28));
 			g.drawString("Press 'P' to play.", 250, 400);
-			
+			Sound.play("Sound/win.wav");
 			
 		} else if (playing) {
 
 			/* Game is playing */
-			
 			g.drawImage(imgBgrPlay.getImage(), 0, 0, 500, 500, null);
 
 			// set the coordinate limit
@@ -409,12 +471,25 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				imgBomb = new ImageIcon("./Images/bomb.png");
 				g.drawImage(imgBomb.getImage(),xRan,yRan, 30,30 ,null);
 			}
+			
+			//Show random spech +
+			if (showRandomspeedplus) {
+				ImageIcon imgPlus  = new ImageIcon();
+				imgPlus = new ImageIcon("./Images/cong.png");
+				g.drawImage(imgPlus.getImage(),xRanplus,yRanplus, 50,50 ,null);
+			}
 
+		//show random spech-
+			if (showRandomspeedminus) {
+				ImageIcon imgMinus  = new ImageIcon();
+				imgMinus = new ImageIcon("./Images/tru.png");
+				g.drawImage(imgMinus.getImage(),xRanminus,yRanminus, 30,30 ,null);
+			}
 			// draw the paddles
 			g.setColor(paddleColor);
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
 			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
-		} else if (gameOver) {
+		} else if (gameOver) {  
 			/* Show End game screen with winner name and score */
 			
 			g.drawImage(imgBgrEnd.getImage(), 0, 0, 500, 500, null);
@@ -439,10 +514,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			//g.setColor(Color.PINK);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
 			// TODO Draw a restart message
-			g.drawString("Game over", 145, 133);						//FIXED #8:
+			g.drawString("Game over", 145, 133);
+			Sound.play("Sound/win.wav");
+			//FIXED #8:
 			g.setColor(Color.RED);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 35));			//DON'T SHOW "GAME OVER"
-			g.drawString("Press Space to restart", 70, 460);
+			g.drawString("Press Space to restart", 50, 460);
 		}
 	}
 
@@ -454,6 +531,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			if (e.getKeyCode() == KeyEvent.VK_P) {								//FIXED #19:
 				showTitleScreen = false;								//P capslock does't work
 				playing = true;
+				txtUser1.setVisible(true);
+				txtUser2.setVisible(true);
 			}
 		} else if (playing) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -474,7 +553,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			ballY = 240;
 			playerOneScore = 0;									//FIXED #6: 
 			playerTwoScore = 0;									//SCORES DON'T RESET AFTER RESTARTTING
+			txtUser1.setVisible(false);
+			txtUser2.setVisible(false);
 		}
+		
 	}
 	
 	public void keyReleased(KeyEvent e) {
@@ -490,7 +572,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 																//Control buttons of player 2 (button W/S) don't work correctly
 		}
 	}
-	}
+	} 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
