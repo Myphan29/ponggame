@@ -112,9 +112,9 @@ public class SecondWindow extends JDialog{
 		btnGroupBall.add(optBall1);
 		btnGroupBall.add(optBall2);
 		btnGroupBall.add(optBall3);
-		optBall1.setBounds(55, 110, 60, 25);
-		optBall2.setBounds(170, 110, 60, 25);
-		optBall3.setBounds(285, 110, 60, 25);
+		optBall1.setBounds(55, 110, 70, 25);
+		optBall2.setBounds(170, 110, 70, 25);
+		optBall3.setBounds(285, 110, 70, 25);
 		
 		optBall1.addActionListener(new ActionListener() {
 			
@@ -140,7 +140,23 @@ public class SecondWindow extends JDialog{
 				NumberBall=3;
 			}
 		});
-		
+		ActionListener lengthName= new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String username1=txtUsername1.getText();
+				String username2=txtUsername2.getText();
+		if (username1.length()>9){
+			JOptionPane.showMessageDialog(null, "Username is too long");
+			}
+		if (username2.length()>9){
+			JOptionPane.showMessageDialog(null, "Username is too long");
+			}
+		}
+		};
+		txtUsername1.addActionListener(lengthName);
+		txtUsername2.addActionListener(lengthName);
 		
 	}
 	public void ChoosePaddle(){
