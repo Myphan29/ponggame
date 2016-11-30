@@ -81,7 +81,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	private int playerOneHeight = 60;
 
 	/** Player 2's paddle: position and size */
-	private int playerTwoX = 490;
+	private int playerTwoX = 485;
 	private int playerTwoY = 200;
 	private int playerTwoWidth = 10;
 	private int playerTwoHeight = 60;
@@ -136,10 +136,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 		timeToDisplay2 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
 		timeToDisplay3 = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 500;
 		// call step() 60 fps
-
+		//Sound start game
+		if (showTitleScreen){
+		Sound.play("Sound/banana.wav");}
 		Timer timer = new Timer(interval, this);
 		timer.start();
-
+		
 	}
 
 	/** Implement actionPerformed */
@@ -213,6 +215,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					if (playerTwoScore == 5) {
 						playing = false;
 						gameOver = true;
+						Sound.play("Sound/win.wav");
 					}
 					ballX = 240;
 					ballY = 240;
@@ -237,6 +240,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 					if (playerOneScore == 5) {
 						playing = false;
 						gameOver = true;
+						Sound.play("Sound/win.wav");
 					}
 					ballX = 240;
 					ballY = 240;
@@ -353,10 +357,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-
+	
 		if (showTitleScreen) {
 			g.drawImage(imgBgrStart.getImage(), 0, 0, 500, 500, null);
-
 			// Secondwindow
 			rect = new Rectangle(x - 50, y + 182, w, h);
 			if (hover) {
@@ -379,17 +382,15 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.drawString("Setting", x - 25, y + 202);
 
 			/* Show welcome screen */
-
+			
 			// Draw game title and start message
 			// g.fillRect(70, 45, 355, 75);
 			g.setColor(Color.CYAN);
 			g.setFont(new Font("", Font.BOLD, 60));
 			g.drawString("Pong Game", 150, 380);
-
 			// FIXME Welcome message below show smaller than game title
 			g.setFont(new Font(Font.DIALOG, Font.ITALIC, 28));
-			g.drawString("Press 'P' to play", 265, 440);
-			Sound.play("Sound/win.wav");
+			g.drawString("Press 'P' to play", 265, 440);			
 
 		} else if (playing) {
 
@@ -479,7 +480,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
 		} else if (gameOver) {
 			/* Show End game screen with winner name and score */
-
 			g.drawImage(imgBgrEnd.getImage(), 0, 0, 500, 500, null);
 
 			// Draw scores
@@ -504,7 +504,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
 			// TODO Draw a restart message
 			g.drawString("Game over", 145, 133);
-			Sound.play("Sound/win.wav");
 			// FIXED #8:
 			g.setColor(Color.RED);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 35)); // DON'T SHOW "GAME
@@ -515,7 +514,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	public void keyTyped(KeyEvent e) {
 	}
-
+	
 	public void keyPressed(KeyEvent e) {
 		if (showTitleScreen) {
 			if (e.getKeyCode() == KeyEvent.VK_P) { // FIXED #19:
@@ -535,6 +534,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener, Mo
 				sPressed = true;
 			}
 		} else if (gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
+			Sound.play("Sound/banana.wav");
 			gameOver = false;
 			showTitleScreen = true;
 			playerOneY = 200;
